@@ -50,10 +50,10 @@ pipeline
                     }
                 }
                 success {
-                    slackSend(channel: "${env.slack_channel}", message: ":white_check_mark: *${env.STAGE_NAME} passed*\n\n    Job URL: ${env.JOB_URL}${env.BUILD_NUMBER}\n    PR: ${env.GITHUB_PR_URL}\n", botUser: true, iconEmoji: "jenkins", username: "Jenkins")
+                    slackSend(channel: "${env.slack_channel}", message: ":white_check_mark: *${env.STAGE_NAME} passed*\n\n    Job URL: ${env.JOB_URL}${env.BUILD_NUMBER}\n    PR: ${env.GITHUB_PR_URL}\n", iconEmoji: "jenkins", username: "Jenkins")
                 }
                 failure {
-                    slackSend(channel: "${env.slack_channel}", message: ":red_circle: *${env.STAGE_NAME} ran into testing issues, probably best to check it out*\n\n    PR: ${env.GITHUB_PR_URL}\n", botUser: true, iconEmoji: "jenkins", username: "Jenkins")
+                    slackSend(channel: "${env.slack_channel}", message: ":red_circle: *${env.STAGE_NAME} ran into testing issues, probably best to check it out*\n\n    PR: ${env.GITHUB_PR_URL}\n", iconEmoji: "jenkins", username: "Jenkins")
                 }
             }
         }
