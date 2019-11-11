@@ -20,7 +20,7 @@ file_path="${DIR}/src"
 file_name="test.txt"
 full_filename="${code_path}/${filename}"
 
-mkdir -p ${code_path}
+mkdir -p ${file_path}
 echo $(date +%s) > $full_filename
 
 # Clean up
