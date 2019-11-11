@@ -38,6 +38,8 @@ pipeline
             steps {
                 sh '''#!/bin/bash
                      echo "hello world" 
+                     bash bin/deploy_dummy.sh prod
+                     echo $GITHUB_BRANCH_NAME
                 '''
                 }
             
