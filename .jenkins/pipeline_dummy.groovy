@@ -36,25 +36,20 @@ pipeline
 
         stage('Build') {
             steps {
-                sh '''#!/bin/bash
-                     echo "hello world" 
-                     bash bin/deploy_dummy.sh prod
-                     echo $GITHUB_BRANCH_NAME
-                '''
-                }
-            
-            docker.image('lambci/lambda:build-python3.7').inside('--user root -e AWS_REGION="${env.AWS_REGION}"'){
-                sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
-                      mkdir -p /tmp
-                      touch ${AWS_SHARED_CREDENTIALS_FILE}
-                      echo "[default]" > $AWS_SHARED_CREDENTIALS_FILE
-                      echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
-                      apt-get update && apt-get install -y git --no-install-recommends
-                      python3 -m ensurepip
-                      pip3 install awscli boto3
-                      echo "install"
-                      echo "build step"'''
-                }
+                
+                docker.image('lambci/lambda:build-python3.7').inside('--user root -e AWS_REGION="${env.AWS_REGION}"'){
+                    sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
+                        mkdir -p /tmp
+                        touch ${AWS_SHARED_CREDENTIALS_FILE}
+                        echo "[default]" > $AWS_SHARED_CREDENTIALS_FILE
+                        echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
+                        apt-get update && apt-get install -y git --no-install-recommends
+                        python3 -m ensurepip
+                        pip3 install awscli boto3
+                        echo "install"
+                        echo "build step"'''
+                    }
+            }
             
             post {
                 always {
