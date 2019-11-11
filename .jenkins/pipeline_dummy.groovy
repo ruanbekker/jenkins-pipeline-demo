@@ -11,7 +11,7 @@ void setBuildStatus(String message, String state,String git_repo,String context)
 pipeline
 {
     agent {
-        label 'jenkins-master'
+        label 'master'
     }
     environment {
         project_name = "demo"
