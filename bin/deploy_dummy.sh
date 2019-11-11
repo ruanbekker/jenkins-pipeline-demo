@@ -18,10 +18,10 @@ printf "=====================================\n"
 DIR="$(pwd)"
 file_path="${DIR}/src"
 file_name="test.txt"
-full_filename="${code_path}/${filename}"
+full_filename="${file_path}/${file_name}"
 
 mkdir -p ${file_path}
-echo $(date +%s) > $full_filename
+echo "$(date +%s)" > $full_filename
 
 # Clean up
 clean_up "${file_path}"
