@@ -53,7 +53,7 @@ pipeline
                       python3 -m ensurepip
                       pip3 install awscli boto3
                       echo "install"
-                      echo "build step"''
+                      echo "build step"'''
                 }
             
             post {
