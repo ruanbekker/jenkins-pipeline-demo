@@ -36,7 +36,7 @@ pipeline
 
         stage('Build') {
             steps {
-                bash '''#!/bin/bash
+                sh '''#!/bin/bash
                      echo "hello world" 
                 '''
                 }
@@ -66,11 +66,11 @@ pipeline
             }
             steps{
                 script {
-                    docker.image('lambci/lambda:build-python3.7').inside('--user root -e AWS_REGION="${env.AWS_REGION} -e AWS_ACC_NR="0000000000000"'){
+                    
                        sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
                               mkdir -p /tmp
                               bash bin/deploy_dummy.sh prod '''
-                    }
+                    
                 }
             }
             post {
