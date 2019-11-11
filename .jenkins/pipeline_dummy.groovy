@@ -40,7 +40,7 @@ pipeline
                      echo "hello world" 
                 '''
                 }
-            }
+            
             post {
                 always {
                     script {
