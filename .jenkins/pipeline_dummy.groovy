@@ -42,7 +42,7 @@ pipeline
                     docker.image('lambci/lambda:build-python3.7').inside('--user root -e AWS_REGION="${env.AWS_REGION}"'){
                         sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
                               mkdir -p /tmp
-                              echo "build step"''
+                              echo "build step"'''
                     }
                 }
             }
