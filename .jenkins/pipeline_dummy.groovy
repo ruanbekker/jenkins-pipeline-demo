@@ -16,6 +16,7 @@ pipeline
     environment {
         project_name = "demo"
         project_owner = "ruan"
+        slack_channel = "system_events"
         AWS_REGION = "eu-west-1"
         AWS_DEV_ACCOUNT_NUMBER = credentials('AWS_DEV_ACCOUNT_NUMBER')
         GIT_TOKEN = credentials('GITHUB_TOKEN')
