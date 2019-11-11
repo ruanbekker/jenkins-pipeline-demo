@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -ex
 
 function clean_up {
     printf "\nCleaning up...\n"
