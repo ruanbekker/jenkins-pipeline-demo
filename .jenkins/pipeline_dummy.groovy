@@ -36,16 +36,9 @@ pipeline
 
         stage('Build') {
             steps {
-                script {
-                    if (env.GITHUB_PR_URL != null ) {
-                        setBuildStatus("Jenkins ${env.STAGE_NAME} Executing", "PENDING", "${env.GITHUB_REPO_SSH_URL}",
-                        "jenkins/${env.STAGE_NAME}")
-                    }
-                    docker.image('lambci/lambda:build-python3.7').inside('--user root -e AWS_REGION="${env.AWS_REGION}"'){
-                        sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
-                              mkdir -p /tmp
-                              echo "build step"'''
-                    }
+                bash '''#!/bin/bash
+                     echo "hello world" 
+                '''
                 }
             }
             post {
