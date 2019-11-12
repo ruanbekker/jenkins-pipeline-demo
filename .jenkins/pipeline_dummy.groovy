@@ -28,9 +28,6 @@ pipeline
     stages{
 
         stage('Checkout'){
-            when {
-                expression { env.GITHUB_BRANCH_NAME != null }
-            }
             steps {
                 git url: "git@github.com:ruanbekker/jenkins-pipeline-demo.git",
                 branch: "${env.GITHUB_BRANCH_NAME}"
@@ -49,7 +46,7 @@ pipeline
                         echo "aws_secret_access_key=$AWS_SECRET_KEY" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "[dev]" > $AWS_SHARED_CREDENTIALS_FILE
+                        echo "[dev]" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "role_arn=$AWS_CROSS_ACCOUNT_ROLE_ARN" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "source_profile=master" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
