@@ -59,7 +59,8 @@ pipeline
                         pip3 install awscli boto3
                         echo "install"
                         echo "build step"
-                        aws --profile dev sts get-caller-identity'''
+                        aws --profile dev sts get-caller-identity
+                        ls -lah'''
                     }
                 }
             }
@@ -83,18 +84,14 @@ pipeline
 
         stage('Deploy to Prod') {
             when {
-                expression {
-                    "${env.GITHUB_BRANCH_NAME}" == 'master';
-                }
+                expression { env.GITHUB_BRANCH_NAME != null }
             }
             steps{
-                script {
-                    
+                script {          
                        sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
                               mkdir -p /tmp
                               bash bin/deploy_dummy.sh prod '''
-                    
-                }
+                 }
             }
             post {
                   always {
