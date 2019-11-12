@@ -16,6 +16,5 @@ source_profile=master
 region=${AWS_REGION}
 EOF
 
-apt-get update && apt-get install -y git --no-install-recommends
 python3 -m ensurepip
 pip3 install awscli boto3
