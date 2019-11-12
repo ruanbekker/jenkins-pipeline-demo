@@ -19,6 +19,9 @@ pipeline
         slack_channel = "system_events"
         AWS_REGION = "eu-west-1"
         AWS_DEV_ACCOUNT_NUMBER = credentials('AWS_DEV_ACCOUNT_NUMBER')
+        AWS_ACCESS_KEY = credentials('AWS_MASTER_JENKINS_AK')
+        AWS_SECRET_KEY = credentials('AWS_MASTER_JENKINS_SK')
+        AWS_CROSS_ACCOUNT_ROLE_ARN = "arn:aws:iam::$AWS_DEV_ACCOUNT_NUMBER:role/SystemCrossAccountAccess"
         GIT_TOKEN = credentials('GITHUB_TOKEN')
         SLACK_TOKEN_SECRET = credentials('SLACK_TOKEN_SECRET')
     }
@@ -41,14 +44,22 @@ pipeline
                     sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
                         mkdir -p /tmp
                         touch ${AWS_SHARED_CREDENTIALS_FILE}
-                        echo "[default]" > $AWS_SHARED_CREDENTIALS_FILE
+                        echo "[master]" > $AWS_SHARED_CREDENTIALS_FILE
+                        echo "aws_access_key_id=$AWS_ACCESS_KEY" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "aws_secret_access_key=$AWS_SECRET_KEY" >> $AWS_SHARED_CREDENTIALS_FILE
                         echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "[dev]" > $AWS_SHARED_CREDENTIALS_FILE
+                        echo "role_arn=$AWS_CROSS_ACCOUNT_ROLE_ARN" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "source_profile=master" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
+                        echo "" >> $AWS_SHARED_CREDENTIALS_FILE
                         apt-get update && apt-get install -y git --no-install-recommends
                         python3 -m ensurepip
                         pip3 install awscli boto3
                         echo "install"
                         echo "build step"
-                        aws sts get-caller-identity'''
+                        aws --profile dev sts get-caller-identity'''
                     }
                 }
             }
