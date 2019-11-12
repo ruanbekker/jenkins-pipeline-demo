@@ -41,26 +41,9 @@ pipeline
             steps {
               script {
                 docker.image('lambci/lambda:build-python3.7').inside('--privileged --user root -e AWS_REGION="eu-west-1"'){
-                    sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
-                        mkdir -p /tmp
-                        touch ${AWS_SHARED_CREDENTIALS_FILE}
-                        echo "[master]" > $AWS_SHARED_CREDENTIALS_FILE
-                        echo "aws_access_key_id=$AWS_ACCESS_KEY" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "aws_secret_access_key=$AWS_SECRET_KEY" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "[dev]" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "role_arn=$AWS_CROSS_ACCOUNT_ROLE_ARN" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "source_profile=master" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "region=$AWS_REGION" >> $AWS_SHARED_CREDENTIALS_FILE
-                        echo "" >> $AWS_SHARED_CREDENTIALS_FILE
-                        apt-get update && apt-get install -y git --no-install-recommends
-                        python3 -m ensurepip
-                        pip3 install awscli boto3
-                        echo "install"
-                        echo "build step"
-                        aws --profile dev sts get-caller-identity
-                        ls -lah'''
+                    sh '''source bin/setup_aws_environment.sh
+                        echo "calling aws dev"
+                        aws --profile dev sts get-caller-identity'''
                     }
                 }
             }
