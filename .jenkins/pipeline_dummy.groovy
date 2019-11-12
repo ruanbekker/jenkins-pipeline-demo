@@ -66,9 +66,7 @@ pipeline
         }
 
         stage('Deploy to Prod') {
-            when {
-                expression { env.GITHUB_BRANCH_NAME != null }
-            }
+            
             steps{
                 script {          
                        sh '''export AWS_SHARED_CREDENTIALS_FILE=/tmp/.aws
