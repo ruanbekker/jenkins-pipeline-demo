@@ -11,7 +11,7 @@ void setBuildStatus(String message, String state,String git_repo,String context)
 pipeline
 {
     agent {
-        label 'master'
+        label 'docker'
     }
     environment {
         project_name = "demo"
